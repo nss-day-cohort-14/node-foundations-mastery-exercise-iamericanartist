@@ -8,13 +8,13 @@
 // Start with a createReadStream and use the event-stream module's split and map 
 //methods to manipulate the stream.
 ////////////////////////////////// READ STREAM //////////////////////////////////
-process.stdout.write("yo\n")                                        // "yo"
 
 const [, , ...argWord] = process.argv                               // grabs our argument from the command line and assigns it to argWord[0]
 const limitTen = require("./limit-ten")                             // refers to our limit-ten.js which houses our "limitTenTransform" function
 
-const fs = require("fs")
-const readStream = fs.createReadStream("/usr/share/dict/words")     // fs required above, createReadStream is method within
+const { createReadStream } = require("fs")
+const readStream = createReadStream("/usr/share/dict/words")     // fs required above, createReadStream is method within
+// console.log("rea", readStream);
 
 const { split, map } = require("event-stream")
 readStream.pipe(split())                                            // Break up a stream and reassemble it so that each line is a chunk
