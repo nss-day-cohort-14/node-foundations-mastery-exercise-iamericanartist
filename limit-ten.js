@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-"use strict";
+"use strict"
 
 // You will also create your own `Transform` stream as a module called
 // `limit-ten.js`. This `Transform` should be a limiter before finally `pipe`ing
