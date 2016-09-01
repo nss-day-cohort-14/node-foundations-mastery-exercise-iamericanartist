@@ -11,10 +11,11 @@
 const { Transform } = require("stream")
 
 console.log("limit 10");
+
 let counter = 0                                         // setup counter for if/else below
 const limitTenTransform = Transform()
 
-transformStream._transform = (buffer, _, cb) => {
+limitTenTransform._transform = (buffer, _, cb) => {
   if (counter < 10) {                                   // if counter is under 10 add buffered word...
     cb(null, `${buffer.toString().toLowerCase()}`)      // ...then .toLowerCase() word added from buffer...
     counter++                                           // ...and increment counter 
