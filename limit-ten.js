@@ -10,16 +10,24 @@
 
 const { Transform } = require("stream")
 
-let counter = 0                                         // setup counter for if/else below
+// setup counter for if/else below
+let counter = 0
 const limitTenTransform = Transform()
 
+
 limitTenTransform._transform = (buffer, _, cb) => {
-  if (counter < 10) {                                   // if counter is under 10 add buffered word...
-    cb(null, `${buffer.toString().toLowerCase()}\n`)      // ...then .toLowerCase() word added from buffer...
-    counter++                                           // ...and increment counter 
+  // if counter is under 10...
+  if (counter < 10) {
+    // ...add buffered word...
+    cb(null, `${buffer.toString()}\n`)
+    // ...and increment counter 
+    counter++
+
   } else {
-    cb()                                                // callback returns nothing here
+    // callback returns nothing here
+    cb()
   }
 }
+
 
 module.exports = limitTenTransform

@@ -9,22 +9,37 @@
 //methods to manipulate the stream.
 ////////////////////////////////// READ STREAM //////////////////////////////////
 
-const [, , ...argWord] = process.argv                               // grabs our argument from the command line and assigns it to argWord[0]
-const limitTen = require("./limit-ten")                             // refers to our limit-ten.js which houses our "limitTenTransform" function
+// grabs our argument from the command line and assigns it to argWord[0]
+const [, , ...argWord] = process.argv
 
+// refers to our limit-ten.js which houses our "limitTenTransform" function
+const limitTen = require("./limit-ten")
+
+// fs required & createReadStream is method within
 const { createReadStream } = require("fs")
-const readStream = createReadStream("/usr/share/dict/words")     // fs required above, createReadStream is method within
-// console.log("rea", readStream);
+const readStream = createReadStream("/usr/share/dict/words")
 
 const { split, map } = require("event-stream")
-readStream.pipe(split())                                            // Break up a stream and reassemble it so that each line is a chunk
-  .pipe(map((data, cb) => {                                         // creates a through stream form async function
+
+// Break up a stream and reassemble it so that each line is a chunk
+readStream.pipe(split())
+
+  // creates a through stream form async function
+  .pipe(map((data, cb) => {
+    // toLowerCase() results and arguments here for comparison only 
     if(data.toString().toLowerCase().startsWith(argWord[0].toLowerCase())) {
-      cb(null, data)                                                // callback returns the lowercased data we checked for .startsWith
+    // callback returns the lowercased data we checked for with startsWith()
+      cb(null, data)
+
     } else{
-      cb()                                                          // callback returns nothing here
+      // callback returns nothing here
+      cb()
     }
   }))
 
-  .pipe(limitTen)                                                   // mapped callback data piped to "limitTenTransform"...
-  .pipe(process.stdout)                                             // ...and back through process.stdout  - Voila!
+  // mapped callback data piped to "limitTenTransform"...
+  .pipe(limitTen)
+
+  // ...and back through process.stdout  - Voila!
+  .pipe(process.stdout)
+  process.stdout.write(`Words starting with ${argWord}:\n`)
