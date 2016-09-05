@@ -9,20 +9,30 @@
 //methods to manipulate the stream.
 ////////////////////////////////// READ STREAM //////////////////////////////////
 
-// grabs our argument from the command line and assigns it to argWord[0]
+// grabs the argument from the command line and assigns it to argWord[0]
 const [, , ...argWord] = process.argv
 
-// refers to our limit-ten.js which houses our "limitTenTransform" function
+// refers to limit-ten.js which houses "limitTenTransform" function
 const limitTen = require("./limit-ten")
 
 // fs required & createReadStream is method within
 const { createReadStream } = require("fs")
 const readStream = createReadStream("/usr/share/dict/words")
-
 const { split, map } = require("event-stream")
 
-// Break up a stream and reassemble it so that each line is a chunk
-readStream.pipe(split())
+    
+// when a user tries to run the code and there is no argument made:
+if(!argWord[0]) {
+  // alert user to error and usage formatting...
+  process.stdout.write('Please enter a search term...\nUsage: "./word-search.js [search term]"\n')
+  // ...and then exit code with a "failure" code ("0" is the default "success", and "1" is "failure."
+  process.exit(1);
+
+
+// otherwise...
+} else {
+  // Break up a stream and reassemble it so that each line is a chunk
+  readStream.pipe(split())
 
   // creates a through stream form async function
   .pipe(map((data, cb) => {
@@ -43,3 +53,4 @@ readStream.pipe(split())
   // ...and back through process.stdout  - Voila!
   .pipe(process.stdout)
   process.stdout.write(`Words starting with ${argWord}:\n`)
+}
