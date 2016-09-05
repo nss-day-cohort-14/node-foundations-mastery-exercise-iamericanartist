@@ -1,4 +1,8 @@
-# Word Search
+# Word Search Mastery Exercise
+## Node Foundations / Mastery Exercise / Word Search
+
+![Word Search](wordSearchScrn.jpg?raw=true "Word Search Screenshot")  
+***
 
 ## Requirements
 
